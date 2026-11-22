@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sena Tekin | Harita Mühendisi</title>
+<meta name="description" content="Sena Tekin – Harita Mühendisi. CBS, QGIS ve mekânsal analiz projeleri.">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --text: #1d2327;
+    --muted: #5b656c;
+    --line: #e2e0d8;
+    --accent: #0f766e;
+    --accent-soft: #e0f2ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #13171a;
+      --surface: #1b2024;
+      --text: #e8eaec;
+      --muted: #9aa4ab;
+      --line: #2c3338;
+      --accent: #2dd4bf;
+      --accent-soft: #163a36;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; gap: 20px; align-items: center; height: 56px; overflow-x: auto; }
+  nav strong { margin-right: auto; white-space: nowrap; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  nav a:hover { color: var(--accent); }
+
+  header { padding: 72px 0 48px; }
+  .tag { color: var(--accent); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: 13px; }
+  h1 { font-size: clamp(34px, 6vw, 52px); line-height: 1.1; margin: 8px 0 16px; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 680px; margin: 0; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .btn {
+    display: inline-block; padding: 9px 16px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--surface);
+    color: var(--text); text-decoration: none; font-size: 15px;
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #0b1f1d; } }
+
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 26px; margin: 0 0 24px; }
+  h3 { margin: 0 0 6px; font-size: 19px; }
+
+  .projects { display: grid; gap: 24px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; overflow: hidden;
+  }
+  .card.split { display: grid; grid-template-columns: 1.3fr 1fr; }
+  .card img { display: block; width: 100%; height: 100%; object-fit: cover; background: #fff; }
+  .card .body { padding: 20px 22px; }
+  .card p { margin: 0 0 12px; color: var(--muted); }
+  .card ul { margin: 0 0 12px; padding-left: 18px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 13px; padding: 2px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); }
+  .placeholder {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    min-height: 220px; padding: 20px; color: var(--muted); font-size: 14px;
+    background: repeating-linear-gradient(45deg, var(--accent-soft) 0 12px, transparent 12px 24px);
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .grid2 .card img { height: auto; aspect-ratio: 4 / 3; object-fit: contain; }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--line); }
+  .gallery img { aspect-ratio: 16 / 10; object-fit: cover; }
+  .captions { display: grid; grid-template-columns: repeat(3, 1fr); font-size: 13px; color: var(--muted); text-align: center; padding: 6px 0 0; }
+
+  .item { margin-bottom: 22px; }
+  .item .meta { color: var(--muted); font-size: 14px; }
+  .item ul { margin: 6px 0 0; padding-left: 18px; }
+
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skills span { padding: 5px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-size: 15px; }
+
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 720px) {
+    .card.split, .grid2 { grid-template-columns: 1fr; }
+    .gallery, .captions { grid-template-columns: 1fr; }
+    .captions { display: none; }
+    header { padding: 48px 0 32px; }
+    nav a.opt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <strong>Sena Tekin</strong>
+    <a href="#projeler">Projeler</a>
+    <a href="#deneyim" class="opt">Deneyim</a>
+    <a href="#beceriler" class="opt">Beceriler</a>
+    <a href="#iletisim">İletişim</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <div class="tag">Harita Mühendisi · CBS</div>
+  <h1>Sena Tekin</h1>
+  <p class="lead">
+    Harita mühendisiyim. Sahada aplikasyon ve ölçüm, büroda CBS ile mekânsal veri üretimi ve analizi yapıyorum.
+    QGIS ile yaptığım çalışmaları bu sayfada topluyorum.
+  </p>
+  <div class="links">
+    <a class="btn primary" href="#projeler">Projeleri gör</a>
+    <a class="btn" href="https://www.linkedin.com/in/tekinsena/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/senaatekin" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<section id="projeler">
+  <h2>Projeler</h2>
+  <div class="projects">
+
+    <article class="card split">
+      <a href="izmir-uygunluk.jpg" target="_blank"><img src="izmir-uygunluk.jpg" alt="İzmir ili yerleşime uygunluk haritası" loading="lazy"></a>
+      <div class="body">
+        <h3>İzmir İli Yerleşime Uygunluk Analizi</h3>
+        <p>İzmir ilinde yerleşime uygun ve uygun olmayan alanları belirleyen kısıt tabanlı raster analizi.</p>
+        <ul>
+          <li>Sayısal yükseklik modelinden eğim üretimi</li>
+          <li>Orman, su ve korunan alanların kısıt olarak çıkarılması</li>
+          <li>TUREF / TM27 projeksiyonunda çalışma</li>
+        </ul>
+        <div class="chips"><span class="chip">QGIS</span><span class="chip">DEM</span><span class="chip">Raster hesap</span><span class="chip">TUREF TM27</span></div>
+      </div>
+    </article>
+
+    <article class="card split">
+      <a href="konya-ges.jpg" target="_blank"><img src="konya-ges.jpg" alt="Konya ili GES yer seçimi uygunluk haritası" loading="lazy"></a>
+      <div class="body">
+        <h3>Konya İli GES Yer Seçimi</h3>
+        <p>Konya ilinde güneş enerji santrali (GES) kurulmaya uygun alanları belirleyen çok kriterli uygunluk analizi. Alanlar "uygun değil"den "en uygun"a kadar sınıflandırıldı ve 10 hektardan büyük aday alanlar ayrıca işaretlendi.</p>
+        <ul>
+          <li>Güneş ışınımı (GHI), eğim ve bakı katmanları</li>
+          <li>Yola ve enerji iletim hattına mesafe analizleri</li>
+          <li>Kriterlerin puanlanması, kısıt ve yüksek eğimli alanların elenmesi</li>
+          <li>Uygunluk sınıflarının çıkarılması, 10 ha ve üzeri aday alanların belirlenmesi</li>
+          <li>Veri: Global Solar Atlas, OpenStreetMap, SRTM · TUREF / TM33</li>
+        </ul>
+        <div class="chips"><span class="chip">QGIS</span><span class="chip">Çok kriterli analiz</span><span class="chip">Raster hesap</span><span class="chip">GDAL</span><span class="chip">TUREF TM33</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="gallery">
+        <a href="cigli-nufus-yogunlugu.jpg" target="_blank"><img src="cigli-nufus-yogunlugu.jpg" alt="Çiğli mahalle nüfus yoğunluğu haritası" loading="lazy"></a>
+        <a href="cigli-egim.jpg" target="_blank"><img src="cigli-egim.jpg" alt="Çiğli eğim haritası ve mahalle merkezleri" loading="lazy"></a>
+        <a href="cigli-egimli-yollar.jpg" target="_blank"><img src="cigli-egimli-yollar.jpg" alt="Çiğli'de eğimi yüzde 15 ve üzeri olan yollar" loading="lazy"></a>
+      </div>
+      <div class="captions"><span>Nüfus yoğunluğu</span><span>Eğim haritası</span><span>Eğimi %15+ olan yollar (kırmızı)</span></div>
+      <div class="body">
+        <h3>Çiğli İtfaiye İstasyonları Erişilebilirlik Analizi <span style="font-weight:400;color:var(--muted);font-size:15px">· Ekip projesi, 2022</span></h3>
+        <p>İzmir Çiğli'de mevcut itfaiye istasyonlarının yeterliliğini değerlendirmek ve yeni istasyon için uygun yer önermek amacıyla, "Kentsel Ulaşım Planlamasında CBS" dersi kapsamında üç kişilik ekiple yapılan ArcGIS Pro çalışması.</p>
+        <ul>
+          <li>Mahalle sınırları ve OSM yol verisinin hazırlanması (KML to Layer, Clip)</li>
+          <li>Mahalle nüfuslarından nüfus yoğunluğu haritası üretilmesi</li>
+          <li>DEM'den eğim haritası ve itfaiye araçları için eğimi %15 ve üzeri olan yolların belirlenmesi</li>
+          <li>KGM trafik yoğunluğu verisinin derlenmesi ve Network Analyst ile erişilebilirlik analizinin kurgulanması</li>
+        </ul>
+        <div class="chips"><span class="chip">ArcGIS Pro</span><span class="chip">Network Analyst</span><span class="chip">OSM</span><span class="chip">Yer seçimi</span></div>
+      </div>
+    </article>
+
+    <article class="card split">
+      <a href="yalova-analiz.jpg" target="_blank"><img src="yalova-analiz.jpg" alt="Yalova orman bölgesi haritası ve bitki örtüsü analizi" loading="lazy"></a>
+      <div class="body">
+        <h3>Yalova Orman Bölgesi ve Bitki Örtüsü Analizi</h3>
+        <p>Yalova ilinde orman alanlarının ilçe sınırları ve yol ağıyla birlikte, uydu görüntüsü üzerinde raster analiz katmanıyla haritalanması.</p>
+        <ul>
+          <li>İlçe sınırlarının birleştirilmesi ve sınıflandırılması</li>
+          <li>Orman alanı poligonları ve yol ağı</li>
+          <li>Uydu görüntüsü altlığı üzerinde raster analiz katmanı</li>
+        </ul>
+        <div class="chips"><span class="chip">QGIS</span><span class="chip">Raster analiz</span><span class="chip">Pafta düzeni</span></div>
+      </div>
+    </article>
+
+    <article class="card split">
+      <a href="agri-hillshade.jpg" target="_blank"><img src="agri-hillshade.jpg" alt="Van Gölü ve çevresi gölgelendirilmiş rölyef" loading="lazy"></a>
+      <div class="body">
+        <h3>Van Gölü ve Çevresi Rölyef Çalışması</h3>
+        <p>Van Gölü ve çevresinin DEM verilerine göre oluşturulmuş gölgelendirilmiş rölyef (hillshade) haritası. Bölgedeki dağlar, ovalar, Nemrut Krateri ve Erçek Gölü gibi yer şekilleri belirgin şekilde görülebiliyor.</p>
+        <ul>
+          <li>1 arc-saniye SRTM DEM paftalarının indirilmesi</li>
+          <li>Paftaların mozaiklenerek tek yükseklik modeline dönüştürülmesi</li>
+          <li>Yükseklik modelinden gölgelendirilmiş rölyef üretilmesi</li>
+        </ul>
+        <div class="chips"><span class="chip">QGIS</span><span class="chip">SRTM DEM</span><span class="chip">Mozaik</span><span class="chip">Hillshade</span></div>
+      </div>
+    </article>
+
+    <div class="grid2">
+      <article class="card">
+        <a href="izmir-manisa-fiziki.jpg" target="_blank"><img src="izmir-manisa-fiziki.jpg" alt="İzmir–Manisa çevresi fiziki haritası" loading="lazy"></a>
+        <div class="body">
+          <h3>İzmir–Manisa Fiziki Haritası</h3>
+          <p>SRTM yükseklik verisinden gölgelendirme ve yükseklik renklendirmesiyle hazırlanmış fiziki harita.</p>
+          <div class="chips"><span class="chip">SRTM</span><span class="chip">Hillshade</span><span class="chip">Pafta düzeni</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <a href="turkiye-nufus.jpg" target="_blank"><img src="turkiye-nufus.jpg" alt="Türkiye il nüfus haritası" loading="lazy"></a>
+        <div class="body">
+          <h3>Türkiye İl Nüfus Haritası</h3>
+          <p>2025 il nüfus verisinin tablo birleştirmesiyle il sınırlarına bağlanıp tematik haritaya dönüştürülmesi.</p>
+          <div class="chips"><span class="chip">Tablo birleştirme</span><span class="chip">Tematik harita</span></div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<section id="deneyim">
+  <h2>Deneyim</h2>
+  <div class="item">
+    <h3>Harita Mühendisi · Marmara Harita Mühendislik</h3>
+    <div class="meta">Bursa · Şubat – Nisan 2026</div>
+    <ul>
+      <li>3B sayısal yapı modeli hazırlama</li>
+      <li>Yapı aplikasyon projesi (HUS)</li>
+      <li>Röperli kroki, parsel aplikasyonu</li>
+    </ul>
+  </div>
+  <div class="item">
+    <h3>Stajyer Harita Mühendisi · Sivil Havacılık Genel Müdürlüğü</h3>
+    <div class="meta">Ankara · Haziran – Temmuz 2023</div>
+    <ul>
+      <li>Mania planları mevzuatı</li>
+      <li>Mania kriterlerine göre imar planlarının düzenlenmesi ve kontrolü</li>
+    </ul>
+  </div>
+  <div class="item">
+    <h3>Stajyer · Isparta Lisanslı Kadastro Bürosu</h3>
+    <div class="meta">Isparta · Mart – Nisan 2017</div>
+    <ul>
+      <li>İmar uygulamaları, aplikasyon, subasman, plankote, vaziyet planı</li>
+      <li>İfraz, tevhid, cins değişikliği ve yola terk dosyaları</li>
+      <li>GPS, nivo ve total station ile saha ölçümleri; AutoCAD ve NetCAD ile çizim</li>
+    </ul>
+  </div>
+</section>
+
+<section id="egitim">
+  <h2>Eğitim</h2>
+  <div class="item">
+    <h3>Harita Mühendisliği · İzmir Katip Çelebi Üniversitesi</h3>
+    <div class="meta">2018 – 2025</div>
+  </div>
+  <div class="item">
+    <h3>Bilgisayar Programcılığı · Atatürk Üniversitesi</h3>
+    <div class="meta">2021 – 2023</div>
+  </div>
+  <div class="item">
+    <h3>Harita Kadastro · Süleyman Demirel Üniversitesi</h3>
+    <div class="meta">2014 – 2017</div>
+  </div>
+</section>
+
+<section id="beceriler">
+  <h2>Beceriler ve Sertifikalar</h2>
+  <div class="skills">
+    <span>QGIS</span><span>ArcGIS</span><span>NetCAD</span><span>AutoCAD</span><span>Erdas Imagine</span>
+    <span>GPS / GNSS</span><span>Total Station</span><span>Nivo</span><span>Teodolit</span>
+    <span>HTML / CSS</span><span>MS Office</span>
+  </div>
+  <div class="item" style="margin-top:22px">
+    <ul>
+      <li>QGIS Desktop Temel Seviye Eğitimi</li>
+      <li>NetCAD Sertifikası</li>
+      <li>Akbank Python Bootcamp (Global AI Hub)</li>
+      <li>Introduction to Python (Global AI Hub)</li>
+      <li>İHA-1 Ticari Ehliyet · B Sınıfı Sürücü Belgesi</li>
+    </ul>
+  </div>
+</section>
+
+<section id="iletisim">
+  <h2>İletişim</h2>
+  <p>İş birliği ve pozisyonlar için bana ulaşabilirsiniz.</p>
+  <div class="links">
+    <a class="btn primary" href="mailto:ssenaatekin@hotmail.com">ssenaatekin@hotmail.com</a>
+    <a class="btn" href="https://www.linkedin.com/in/tekinsena/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">© 2026 Sena Tekin · Haritalar QGIS ile üretilmiştir.</div>
+</footer>
+
+</body>
+</html>
